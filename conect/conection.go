@@ -1,4 +1,4 @@
-package main
+package conect
 
 import (
 	"database/sql" // Pacote Database SQL para realizar Query
@@ -7,16 +7,16 @@ import (
 	_ "github.com/go-sql-driver/mysql" // Driver Mysql para Go
 )
 
-func conect() (bd *sql.DB) {
+func Conect() (bd *sql.DB) {
 	driver := "mysql"
-	user := ""
+	user := "root"
 	password := ""
-	name := ""
+	name := "alunos"
 
 	bd, err := sql.Open(driver, user+":"+password+"@/"+name)
 
 	if err != nil {
-		log.Print("error")
+		log.Print("error com a conexão do banco")
 	}
 	return bd
 }
