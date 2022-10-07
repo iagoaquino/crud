@@ -5,4 +5,5 @@ type Aluno struct {
 	Idade     int
 	Matricula int
 	Curso     string
+	Id        int
 }

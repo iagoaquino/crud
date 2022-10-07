@@ -1,0 +1,25 @@
+{{define "Show"}}
+    <table>
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>nome</td>
+                <td>idade</td>
+                <td>matricula</td>
+                <td>curso</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .}}
+                <tr>
+                    <td>{{.Id}}</td>
+                    <td>{{.Nome}}</td>
+                    <td>{{.Idade}}</td>
+                    <td>{{.Matricula}}</td>
+                    <td>{{.Curso}}</td>
+                    <td>nome aqui</td>
+                </tr>
+            {{end}}
+        </tbody>
+    </table>
+{{end}}

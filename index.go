@@ -3,10 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
+	"text/template"
 
 	"server.com/conect"
 	"server.com/model"
 )
+
+var tmpl = template.Must(template.ParseGlob("view/*"))
 
 func ShowAll(w http.ResponseWriter, r *http.Request) {
 	bd := conect.Conect()
@@ -33,17 +36,16 @@ func ShowAll(w http.ResponseWriter, r *http.Request) {
 			aluno.Idade = idade
 			aluno.Matricula = matricula
 			aluno.Nome = nome
+			aluno.Id = id
 
 			alunos = append(alunos, aluno)
 		}
 	}
-	for n := range alunos {
-		log.Println(alunos[n].Nome)
-	}
+	tmpl.ExecuteTemplate(w, "Show", alunos)
 	defer bd.Close()
 }
 func Greet(w http.ResponseWriter, r *http.Request) {
-	log.Println("ola")
+	tmpl.ExecuteTemplate(w, "greet", "olá")
 }
 func main() {
 	log.Println("inicializando servidor na porta:9090")
