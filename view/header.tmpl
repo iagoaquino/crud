@@ -1,4 +1,19 @@
 {{define "header"}}
     <head>
+        <style>
+            .center {
+                text-align:center;
+                font-size:30px;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script>
+              $(document).ready(function(){
+                $('.modal').modal();
+                $('input#input_text, textarea#textarea2').characterCounter();
+             });
+        </script>
     </head>
 {{end}}

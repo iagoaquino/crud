@@ -1,0 +1,19 @@
+{{define "delete"}}
+    {{template "header"}}
+        {{range .}}
+        <div class="container indigo lighten-5">
+            <div class="row"> 
+                <div class="col s8 center">{{.Nome}}</div>
+                <div class="col s2 center">{{.Matricula}}</div>
+                <div class="col s2 center">{{.Idade}}</div>
+                
+            </div>
+            <div class="row"> 
+                <div class="col s12 center">{{.Curso}}</div>
+            </div>
+            <div class="row">
+                <a class="btn green col s2 offset-s5" href="/show"><div>Voltar</div></a>
+            </div>
+        </div>
+        {{end}}
+{{end}}

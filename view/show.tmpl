@@ -1,5 +1,7 @@
 {{define "Show"}}
-    <table>
+    {{template "header"}}
+    <h2 class="center">aqui esta os dados ja cadastrados</h2>
+    <table class="container">
         <thead>
             <tr>
                 <td>id</td>
@@ -7,17 +9,50 @@
                 <td>idade</td>
                 <td>matricula</td>
                 <td>curso</td>
+                <td colspan="2" class="center">opções<td>
             </tr>
         </thead>
         <tbody>
             {{range .}}
+                <div id="modal{{.Id}}D" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center">Confirmação</h4>
+                        <h3>deseja mesmo deletar o aluno com matricula {{.Matricula}}</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn red">Não</a>
+                        <a href="/delete?id={{.Id}}" class="waves-effect waves-green btn green">Sim</a>
+                    </div>
+                </div>
+                <div id="modal{{.Id}}E" class="modal">
+                    <form method="POST" action="edit">
+                        <div class="modal-content">
+                                <div class="row">
+                                    <input type="text" placeholder="nome" class="offset-s4 col s4" value="{{.Nome}}" name="nome" data-length="100">
+                                </div>
+                                <div class="row">
+                                    <input type="number" placeholder="idade" class="offset-s4 col s2" value="{{.Idade}}" name="idade">
+                                    <input type="number" placeholder="matricula" class="col s2" value="{{.Matricula}}" name="matricula">
+                                </div>
+                                <div class="row">
+                                    <input type="text" placeholder="curso" class="offset-s4 col s4"value="{{.Curso}}" name="curso">
+                                </div>
+                                <input type="hidden" name="id" value="{{.Id}}">
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn" value="confirmar">
+                            <a class="modal-close waves-effect waves-green btn red">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
                 <tr>
                     <td>{{.Id}}</td>
                     <td>{{.Nome}}</td>
                     <td>{{.Idade}}</td>
                     <td>{{.Matricula}}</td>
                     <td>{{.Curso}}</td>
-                    <td>nome aqui</td>
+                    <td><a href="#modal{{.Id}}D" class="btn red modal-trigger">apagar</a></td>
+                    <td><a href="#modal{{.Id}}E" class="btn blue modal-trigger">Editar</a></td>
                 </tr>
             {{end}}
         </tbody>
