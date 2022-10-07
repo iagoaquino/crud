@@ -67,11 +67,11 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 			aluno.Id = idshow
 			alunos = append(alunos, aluno)
 		}
-		//comando, err := bd.Prepare("DELETE FROM aluno WHERE id = ?")
+		comando, err := bd.Prepare("DELETE FROM aluno WHERE id = ?")
 		if err != nil {
 			log.Println("erro ao deletar")
 		} else {
-			//comando.Exec(id)
+			comando.Exec(id)
 			log.Println("deletado com sucesso")
 		}
 		tmpl.ExecuteTemplate(w, "delete", alunos)
@@ -126,11 +126,29 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "edit", alunos)
 	defer bd.Close()
 }
+func Insert(w http.ResponseWriter, r *http.Request) {
+	bd := conect.Conect()
+	if r.Method == "POST" {
+		nome := r.FormValue("nomeI")
+		idade := r.FormValue("idadeI")
+		matricula := r.FormValue("matriculaI")
+		curso := r.FormValue("cursoI")
+		comando, err := bd.Prepare("INSERT INTO aluno(nome,idade,matricula,curso) values(?,?,?,?)")
+		if err != nil {
+			log.Println("error com os dados")
+		} else {
+			comando.Exec(nome, idade, matricula, curso)
+		}
+		http.Redirect(w, r, "/show", 301)
+		defer bd.Close()
+	}
+}
 func main() {
 	log.Println("inicializando servidor na porta:9090")
 	http.HandleFunc("/show", ShowAll)
 	http.HandleFunc("/delete", Delete)
 	http.HandleFunc("/edit", Edit)
+	http.HandleFunc("/insert", Insert)
 	http.HandleFunc("/", Greet)
 	http.ListenAndServe(":9090", nil)
 }

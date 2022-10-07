@@ -57,4 +57,22 @@
             {{end}}
         </tbody>
     </table>
+    <div class="container">
+        <h5 class="center">adcionar novo campo</h5>
+        <form method="POST" action="insert">
+            <div class="row">
+                <input type="text" placeholder="nome" class="offset-s4 col s4" name="nomeI" data-length="100">
+            </div>
+            <div class="row">
+                <input type="number" placeholder="idade" class="offset-s4 col s2" name="idadeI">
+                <input type="number" placeholder="matricula" class="col s2" name="matriculaI">
+            </div>
+            <div class="row">
+                <input type="text" placeholder="curso" class="offset-s4 col s4" name="cursoI">
+            </div>
+            <div class="row">
+                <input type="submit" class="btn offset-s5 col s2" value="confirmar">
+            </div>
+        </div>
+    </form>
 {{end}}
