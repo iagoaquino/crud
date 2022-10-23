@@ -1,27 +1,49 @@
 package main
 
 import (
+	"database/sql" // Pacote Database SQL para realizar Query
 	"log"
 	"net/http"
 	"text/template"
 
-	"server.com/conect"
-	"server.com/model"
+	_ "github.com/go-sql-driver/mysql" // Driver Mysql para Go
 )
+
+type Aluno struct {
+	Nome      string
+	Idade     int
+	Matricula int
+	Curso     string
+	Id        int
+}
+
+func Conect() (bd *sql.DB) {
+	driver := "mysql"
+	name := "alunos"
+
+	bd, err := sql.Open(driver, "root:teste123@tcp(172.17.0.2:3306)/"+name)
+
+	if err != nil {
+		log.Print("error com a conexão do banco")
+	} else {
+		log.Print("conectou ao banco")
+	}
+	return bd
+}
 
 var tmpl = template.Must(template.ParseGlob("view/*"))
 
 func ShowAll(w http.ResponseWriter, r *http.Request) {
-	bd := conect.Conect()
+	bd := Conect()
 
 	dados, err := bd.Query("SELECT * FROM aluno")
 
 	if err != nil {
 		log.Println("error com recebimento dos dados")
 	}
-	aluno := model.Aluno{}
-	alunos := []model.Aluno{}
-
+	aluno := Aluno{}
+	alunos := []Aluno{}
+	log.Println("cheguei aqui")
 	for dados.Next() {
 		var nome, curso string
 		var idade int
@@ -49,15 +71,15 @@ func Greet(w http.ResponseWriter, r *http.Request) {
 }
 func Delete(w http.ResponseWriter, r *http.Request) {
 	var id = r.URL.Query().Get("id")
-	bd := conect.Conect()
+	bd := Conect()
 	dados, err := bd.Query("SELECT * FROM aluno WHERE id =" + id)
 	if err != nil {
 		log.Println("valor não encontrado")
 	} else {
 		var nome, curso string
 		var idade, matricula, idshow int
-		aluno := model.Aluno{}
-		alunos := []model.Aluno{}
+		aluno := Aluno{}
+		alunos := []Aluno{}
 		for dados.Next() {
 			dados.Scan(&nome, &idade, &matricula, &curso, &idshow)
 			aluno.Nome = nome
@@ -79,9 +101,9 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	defer bd.Close()
 }
 func Edit(w http.ResponseWriter, r *http.Request) {
-	bd := conect.Conect()
-	aluno := model.Aluno{}
-	alunos := []model.Aluno{}
+	bd := Conect()
+	aluno := Aluno{}
+	alunos := []Aluno{}
 	var idade, matricula, id int
 	var nome, curso string
 	dados, err := bd.Query("SELECT * FROM aluno WHERE id =?", r.FormValue("id"))
@@ -127,7 +149,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	defer bd.Close()
 }
 func Insert(w http.ResponseWriter, r *http.Request) {
-	bd := conect.Conect()
+	bd := Conect()
 	if r.Method == "POST" {
 		nome := r.FormValue("nomeI")
 		idade := r.FormValue("idadeI")
