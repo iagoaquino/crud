@@ -27,17 +27,17 @@
                 <div id="modal{{.Id}}E" class="modal">
                     <form method="POST" action="edit">
                         <div class="modal-content">
-                                <div class="row">
-                                    <input type="text" placeholder="nome" class="offset-s4 col s4" value="{{.Nome}}" name="nome" data-length="100">
-                                </div>
-                                <div class="row">
-                                    <input type="number" placeholder="idade" class="offset-s4 col s2" value="{{.Idade}}" name="idade">
-                                    <input type="number" placeholder="matricula" class="col s2" value="{{.Matricula}}" name="matricula">
-                                </div>
-                                <div class="row">
-                                    <input type="text" placeholder="curso" class="offset-s4 col s4"value="{{.Curso}}" name="curso">
-                                </div>
-                                <input type="hidden" name="id" value="{{.Id}}">
+                            <div class="row">
+                                <input type="text" placeholder="nome" class="offset-s4 col s4" value="{{.Nome}}" name="nome" data-length="100">
+                            </div>
+                            <div class="row">
+                                <input type="number" placeholder="idade" class="offset-s4 col s2" value="{{.Idade}}" name="idade">
+                                <input type="number" placeholder="matricula" class="col s2" value="{{.Matricula}}" name="matricula">
+                            </div>
+                            <div class="row">
+                                <input type="text" placeholder="curso" class="offset-s4 col s4"value="{{.Curso}}" name="curso">
+                            </div>
+                            <input type="hidden" name="id" value="{{.Id}}">
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn" value="confirmar">
@@ -73,6 +73,6 @@
             <div class="row">
                 <input type="submit" class="btn offset-s5 col s2" value="confirmar">
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {{end}}

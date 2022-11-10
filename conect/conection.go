@@ -10,10 +10,10 @@ import (
 func Conect() (bd *sql.DB) {
 	driver := "mysql"
 	user := "root"
-	password := ""
+	password := "teste123"
 	name := "alunos"
 
-	bd, err := sql.Open(driver, user+":"+password+"@/"+name)
+	bd, err := sql.Open(driver, user+":"+password+"@(172.17.0.2:3306)/"+name)
 
 	if err != nil {
 		log.Print("error com a conexão do banco")

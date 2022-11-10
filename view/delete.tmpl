@@ -13,8 +13,17 @@
                 <div class="col s12 center">{{.Curso}}</div>
             </div>
             <div class="row">
-                <a class="btn green col s2 offset-s5" href="/show"><div>Voltar</div></a>
+                <form method="POST" action="insert">
+                    <input type="hidden" name="nomeI" value="{{.Nome}}">
+                    <input type="hidden" name="idadeI"  value="{{.Idade}}">
+                    <input type="hidden" name="matriculaI"  value="{{.Matricula}}">
+                    <input type="hidden" name="cursoI"  value="{{.Curso}}">
+                    <input type="submit" class="btn blue offset-s4 col s4" value="desfazer">
+                </form>
             </div>
         </div>
         {{end}}
+        <div class="row">
+            <a class="btn green col s2 offset-s5" href="/show"><div>Voltar</div></a>
+        </div>
 {{end}}
