@@ -123,6 +123,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		aluno.Id = id
 		alunos = append(alunos, aluno)
 	}
+	log.Println(tmpl.Name())
 	tmpl.ExecuteTemplate(w, "edit", alunos)
 	defer bd.Close()
 }
@@ -139,7 +140,6 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 		} else {
 			comando.Exec(nome, idade, matricula, curso)
 		}
-		log.Println("nome:" + nome)
 		http.Redirect(w, r, "/show", 301)
 		defer bd.Close()
 	}
