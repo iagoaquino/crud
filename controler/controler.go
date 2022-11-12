@@ -11,6 +11,24 @@ import (
 
 var tmpl = template.Must(template.ParseGlob("view/*"))
 
+func Find(w http.ResponseWriter, r *http.Request) {
+	bd := conect.Conect()
+	if r.Method == "POST" {
+		pesquisa := r.FormValue("busca")
+		aluno := model.Aluno{}
+		alunos := []model.Aluno{}
+		dados, err := bd.Query("SELECT * FROM aluno WHERE nome LIKE '%"+pesquisa+"%' OR curso LIKE '%"+pesquisa+"%' OR idade=? OR matricula=?", pesquisa, pesquisa)
+		if err != nil {
+			log.Fatal("erro com o sql:", err)
+		}
+		for dados.Next() {
+			dados.Scan(&aluno.Nome, &aluno.Idade, &aluno.Matricula, &aluno.Curso, &aluno.Id)
+			alunos = append(alunos, aluno)
+		}
+		tmpl.ExecuteTemplate(w, "Show", alunos)
+		defer bd.Close()
+	}
+}
 func ShowAll(w http.ResponseWriter, r *http.Request) {
 	bd := conect.Conect()
 
@@ -21,7 +39,6 @@ func ShowAll(w http.ResponseWriter, r *http.Request) {
 	}
 	aluno := model.Aluno{}
 	alunos := []model.Aluno{}
-	log.Println("cheguei aqui")
 	for dados.Next() {
 		var nome, curso string
 		var idade int
@@ -37,7 +54,6 @@ func ShowAll(w http.ResponseWriter, r *http.Request) {
 			aluno.Matricula = matricula
 			aluno.Nome = nome
 			aluno.Id = id
-
 			alunos = append(alunos, aluno)
 		}
 	}
@@ -72,7 +88,6 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 			log.Println("erro ao deletar")
 		} else {
 			comando.Exec(id)
-			log.Println("deletado com sucesso")
 		}
 		tmpl.ExecuteTemplate(w, "delete", alunos)
 	}
@@ -123,7 +138,6 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		aluno.Id = id
 		alunos = append(alunos, aluno)
 	}
-	log.Println(tmpl.Name())
 	tmpl.ExecuteTemplate(w, "edit", alunos)
 	defer bd.Close()
 }

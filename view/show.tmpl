@@ -1,8 +1,23 @@
 {{define "Show"}}
     {{template "header"}}
+    <div class="container row">
+        <form method="POST" action="find">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="busca" id="icon_prefix2" >
+                <label for="icon_prefix2">Pesquisa</label>
+            </div>
+            <div class="input-field col s3">
+                <input type="submit" class="btn blue" value="pesquisa">
+            </div>
+            <div class="input-field col s3">
+                <a href="/show"><div class="btn green">mostrar tudo</div></a>
+            </div>
+        </form>
+    </div>
     <h2 class="center">aqui esta os dados ja cadastrados</h2>
     <table class="container">
-        <thead>
+        <thead class="black white-text">
             <tr>
                 <td>id</td>
                 <td>nome</td>
